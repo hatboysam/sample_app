@@ -22,7 +22,7 @@ describe User do
         :password => "foobar",
         :password_confirmation => "foobar"
       }
-    end
+  end
 
   it "should create a new instance given valid attributes" do
     User.create!(@attr)
@@ -36,7 +36,7 @@ describe User do
   it "should require an email address" do
      no_email_user = User.new(@attr.merge(:email => ""))
      no_email_user.should_not be_valid
-   end
+  end
    
    it "should reject names that are too long" do
      long_name = "a" * 51 #makes max name length 50 characters
@@ -50,7 +50,7 @@ describe User do
          valid_email_user = User.new(@attr.merge(:email => address))
          valid_email_user.should be_valid
        end
-     end
+   end
 
      it "should reject invalid email addresses" do
        addresses = %w[user@foo,com user_at_foo.org example.user@foo.]
@@ -161,4 +161,24 @@ describe "password encryption" do
             end
           end
       
+end
+
+describe "admin attribute" do
+
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+
+    it "should respond to admin" do
+      @user.should respond_to(:admin)
+    end
+
+    it "should not be an admin by default" do
+      @user.should_not be_admin
+    end
+
+    it "should be convertible to an admin" do
+      @user.toggle!(:admin)
+      @user.should be_admin
+    end
 end
