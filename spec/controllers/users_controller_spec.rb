@@ -279,6 +279,8 @@ describe UsersController do
           response.should redirect_to(signin_path)
         end
       end
+    
+    #Test was from Chapter 10
 
       describe "as a non-admin user" do
         it "should protect the page" do
