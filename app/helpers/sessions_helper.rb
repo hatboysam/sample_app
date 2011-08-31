@@ -22,12 +22,6 @@ module SessionsHelper
       !current_user.nil?
   end
   
-  def deny_access
-      store_location
-      flash[:notice] = "Please sign in to access this page."
-      redirect_to signin_path
-  end
-  
 
   def redirect_back_or(default)
     redirect_to(session[:return_to] || default)
@@ -37,6 +31,18 @@ module SessionsHelper
   def current_user?(user)
       user == current_user
   end
+  
+  #the following two methods are used in the users controller
+  
+  def authenticate
+      deny_access unless signed_in?
+  end
+
+    def deny_access
+        store_location
+        flash[:notice] = "Please sign in to access this page."
+        redirect_to signin_path
+    end
 
     private
 
